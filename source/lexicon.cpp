@@ -10,7 +10,6 @@
 
 namespace word_ladder {
 	auto read_lexicon(std::string const& path) -> std::unordered_set<std::string> {
-
 		auto in = std::ifstream(path.data());
 		if (not in) {
 			throw std::runtime_error("Unable to open file.");
