@@ -115,6 +115,4 @@
 	"files.trimTrailingWhitespace": true,
 	"files.trimFinalNewlines": true,
 	"python.pythonPath": "/usr/bin/python3",
-	"workbench.colorTheme": "Material Theme High Contrast",
-	"workbench.iconTheme": "helium-icon-theme",
 }
