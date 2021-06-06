@@ -44,12 +44,18 @@ namespace word_ladder {
 		}
 	}
 
+	// Get the lexicon as an unordered set of strings from the file specified by the path.
 	[[nodiscard]] auto read_lexicon(std::string const& path) -> std::unordered_set<std::string> {}
 
-	// Given a start word and destination word, returns all the shortest possible paths from the
-	// start word to the destination, where each word in an individual path is a valid word per the
-	// provided lexicon. Pre: ranges::size(from) == ranges::size(to) Pre: valid_words.contains(from)
-	// and valid_words.contains(to)
+	// Returns a vector of vectors of strings. Inner vector is a word ladder where each word in the
+	// ladder is a valid word from the lexicon. Outer vector contains other possible word ladders.
+	//
+	// Word ladders must contain "from" and "to" at the beginning and end of the word ladder
+	// respectively.
+	//
+	// The size of "from" and size of "to" are the same.
+	//
+	// As the shortest possible path is returned, the size of all returned word ladders are the same.
 	[[nodiscard]] auto generate(std::string const& from,
 	                            std::string const& to,
 	                            std::unordered_set<std::string> const& lexicon)

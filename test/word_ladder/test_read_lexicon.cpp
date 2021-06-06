@@ -1,3 +1,5 @@
+// Test cases for read_lexicon()
+//
 //
 //  Copyright UNSW Sydney School of Computer Science and Engineering
 //
@@ -19,14 +21,9 @@
 #include <vector>
 
 #include "catch2/catch.hpp"
-#include "comp6771/testing/range/contain.hpp"
 
-TEST_CASE("fall -> tall") {
-	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
-	auto const ladders = word_ladder::generate("fall", "tall", english_lexicon);
+TEST_CASE("All words are read from file") {
+	auto const english_lexicon = ::word_ladder::read_lexicon("./english.txt");
 
-	CHECK(std::size(ladders) == 1);
-	CHECK(std::is_sorted(ladders));
-
-	CHECK(std::any_of(ladders, testing::contain({"fall", "tall"})));
+	CHECK(english_lexicon.size() == 127142);
 }
