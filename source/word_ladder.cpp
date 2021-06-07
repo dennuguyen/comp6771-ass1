@@ -7,14 +7,29 @@
 
 namespace word_ladder {
 
-	struct Graph {
-		// std::vector < std::pair <
+	class Graph {
+	public:
+		Graph(std::string from, std::string to, std::unordered_set<std::string> lexicon)
+		: from(from)
+		, to(to) {
+			// Filter lexicon for only words of the same length.
+			std::copy_if(lexicon.begin(),
+			             lexicon.end(),
+			             std::inserter(this->lexicon, this->lexicon.begin()),
+			             [from](std::string word) { return word.length() == from.length(); });
 
+			// Build a graph from the lexicon where adjacent edges represent one change in character
+			// between valid words.
+		}
+
+		auto get_word_ladders() -> std::vector<std::vector<std::string>> {}
+
+	private:
 		auto breadth_first_search() -> void {
 			std::deque<int> q; // we use a deque to get that sweet iterator
 
 			while (q.empty() == false) {
-				int v = q[0];
+				int v = q.front();
 				q.pop_front();
 
 				if (v == 0) {
@@ -25,35 +40,26 @@ namespace word_ladder {
 				}
 			}
 		}
+
+		// Returns a vector of which characters are already matching between "from" and "to".
+		// auto compare_words() -> std::vector<bool> {
+		// 	std::vector<bool> vec;
+		// 	for (unsigned int i = 0; i < from.length(); i++) {
+		// 		if (from[i] == to[i]) {
+		// 			vec.push_back(true);
+		// 		}
+		// 		else {
+		// 			vec.push_back(false);
+		// 		}
+		// 	}
+		// 	return vec;
+		// }
+
+	private:
+		const std::string from;
+		const std::string to;
+		std::vector<std::string> lexicon;
 	};
-
-	// Returns a vector of which characters are already matching between "from" and "to".
-	auto compare_words(std::string const& from, std::string const& to) -> std::vector<bool> {
-		if (from.length() != to.length()) {
-			throw std::runtime_error("Start and finishing words have different length.");
-		}
-
-		std::vector<bool> vec;
-		for (unsigned int i = 0; i < from.length(); i++) {
-			if (from[i] == to[i]) {
-				vec.push_back(true);
-			}
-			else {
-				vec.push_back(false);
-			}
-		}
-		return vec;
-	}
-
-	// Get the lexicon as an unordered set of strings from the file specified by the path.
-	[[nodiscard]] auto read_lexicon(std::string const& path) -> std::unordered_set<std::string> {
-		auto file = std::ifstream(path);
-		auto lexicon = std::unordered_set<std::string>();
-		std::copy(std::istream_iterator<std::string>(file),
-		          std::istream_iterator<std::string>(),
-		          std::inserter(lexicon, lexicon.begin()));
-		return lexicon;
-	}
 
 	// Returns a vector of vectors of strings. Inner vector is a word ladder where each word in the
 	// ladder is a valid word from the lexicon. Outer vector contains other possible word ladders.
@@ -68,12 +74,11 @@ namespace word_ladder {
 	                            std::string const& to,
 	                            std::unordered_set<std::string> const& lexicon)
 	   -> std::vector<std::vector<std::string>> {
-		auto word_ladders = std::vector<std::vector<std::string>>();
-		// Which letters of the word are already the same.
-
-		// Filter lexicon for only words of the same length.
+		auto graph = Graph(from, to, lexicon);
 
 		// BFS
-		return word_ladders;
+		auto word_ladders = std::vector<std::vector<std::string>>();
+
+		return graph.get_word_ladders();
 	}
 } // namespace word_ladder
