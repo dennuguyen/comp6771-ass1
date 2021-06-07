@@ -23,7 +23,7 @@
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("Words with single indifferent character at beginning of word") {
+TEST_CASE("Words with single different character at beginning of word") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
 	SECTION("at -> it") {
@@ -41,7 +41,7 @@ TEST_CASE("Words with single indifferent character at beginning of word") {
 	}
 }
 
-TEST_CASE("Words with single indifferent character in middle of word") {
+TEST_CASE("Words with single different character in middle of word") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
 	SECTION("too -> two") {
@@ -66,7 +66,7 @@ TEST_CASE("Words with single indifferent character in middle of word") {
 	}
 }
 
-TEST_CASE("Words with single indifferent character at end of word") {
+TEST_CASE("Words with single different character at end of word") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
 	SECTION("paw -> pal") {
