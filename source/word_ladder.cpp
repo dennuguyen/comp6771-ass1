@@ -1,17 +1,15 @@
 #include <algorithm>
 #include <fstream>
-#include <iostream>
 #include <map>
 #include <queue>
-#include <stdexcept>
 
 #include "comp6771/word_ladder.hpp"
 
 namespace word_ladder {
 
 	// Filter lexicon for only words of the same length.
-	static auto filter_lexicon(const std::unordered_set<std::string> lexicon,
-	                           const size_t word_length) -> std::unordered_set<std::string> {
+	static auto filter_lexicon(std::unordered_set<std::string> const& lexicon,
+	                           std::size_t const& word_length) -> std::unordered_set<std::string> {
 		auto filtered_lexicon = std::unordered_set<std::string>();
 		std::copy_if(lexicon.begin(),
 		             lexicon.end(),
@@ -20,32 +18,33 @@ namespace word_ladder {
 		return filtered_lexicon;
 	}
 
-	// Returns a vector of which characters are already matching between "a" and "b".
-	static auto compare_words(std::string a, std::string b) -> std::vector<bool> {
-		auto vec = std::vector<bool>();
+	// Returns true if there is exactly one mismatching character between "a" and "b".
+	static auto is_single_mismatch(std::string const& a, std::string const& b) -> bool {
+		auto mismatch_count = 0;
 		for (unsigned int i = 0; i < a.length(); i++) {
-			if (a[i] == b[i]) {
-				vec.push_back(true);
+			if (a[i] != b[i]) {
+				mismatch_count++;
 			}
-			else {
-				vec.push_back(false);
+
+			if (mismatch_count > 1) {
+				break;
 			}
 		}
-		return vec;
+		return (mismatch_count == 1) ? true : false;
 	}
 
-	// Builds a graph from an unordered set of words where edges are formed between words with one
-	// differing character.
-	static auto build_graph(const std::unordered_set<std::string> lexicon)
+	// Builds a graph from an unordered set of words. Condition of our graph is that valid leaf words
+	// have a single different character to the base word.
+	static auto build_graph(std::unordered_set<std::string> const& lexicon)
 	   -> std::map<std::string, std::vector<std::string>> {
 		auto graph = std::map<std::string, std::vector<std::string>>();
+
 		for (const auto& base_word : lexicon) {
 			auto adjacent_words = std::vector<std::string>();
-			for (const auto& connecting_word : lexicon) {
-				// Valid adjacent words have a single different character to the base word.
-				const auto vectorised = compare_words(base_word, connecting_word);
-				if (std::count(vectorised.begin(), vectorised.end(), false) == 1) {
-					adjacent_words.push_back(connecting_word);
+
+			for (const auto& leaf_word : lexicon) {
+				if (is_single_mismatch(base_word, leaf_word)) {
+					adjacent_words.push_back(leaf_word);
 				}
 			}
 			graph[base_word] = adjacent_words;
@@ -53,21 +52,40 @@ namespace word_ladder {
 		return graph;
 	}
 
-	// Breadth-first search the graph and returns a vector of word ladders between "from" and "to".
-	static auto breadth_first_search(const std::string from,
-	                                 const std::string to,
-	                                 const std::map<std::string, std::vector<std::string>> graph)
+	// Search the graph for shortest paths between "from" and "to" using a modified BFS algorithm.
+	static auto breadth_first_search(std::string const& from,
+	                                 std::string const& to,
+	                                 std::map<std::string, std::vector<std::string>> const& graph)
 	   -> std::vector<std::vector<std::string>> {
 		auto word_ladders = std::vector<std::vector<std::string>>();
-		auto word_queue = std::deque<std::string>{from}; // words to check for edges
+		auto word_queue = std::deque<std::string>();
+		auto word_distance = std::map<std::string, int>();
+
+		// Initialise.
+		constexpr auto unvisited = -1;
+		for (const auto& word : graph) {
+			word_distance[word.first] = unvisited;
+		}
+		word_distance[from] = 1;
+		word_queue.push_back(from);
+
 		while (word_queue.empty() == false) {
-			const auto word = word_queue.front();
+			const auto current_word = word_queue.front();
 			word_queue.pop_front();
-			if (word == to) {
+
+			if (current_word == to) {
 				break;
 			}
-			for (const auto& adjacent_word : graph.at(word)) {
-				word_queue.push_back(adjacent_word);
+
+			for (const auto& adjacent_word : graph.at(current_word)) {
+				if (word_distance.at(adjacent_word) == unvisited) {
+					word_distance[adjacent_word] = word_distance[current_word] + 1;
+					word_queue.push_back(adjacent_word);
+					word_ladders
+				}
+				else if (word_distance[adjacent_word] == word_distance[current_word]) {
+					word_ladders[adjacent_word].push_back(current_word);
+				}
 			}
 		}
 		return word_ladders;
