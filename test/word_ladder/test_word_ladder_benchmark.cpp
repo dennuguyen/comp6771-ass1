@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// TESTING RATIONALE
+//
+// Modified to fail the test case if times out.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright UNSW Sydney School of Computer Science and Engineering
 //
@@ -15,14 +22,18 @@
 //
 #include "comp6771/word_ladder.hpp"
 
+#include <chrono>
 #include <string>
 #include <vector>
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("atlases -> cabaret") {
-	auto const english_lexicon = ::word_ladder::read_lexicon("./test/word_ladder/english.txt");
+	Catch::Timer timer;
+	timer.start();
+	auto const english_lexicon = ::word_ladder::read_lexicon("./english.txt");
 	auto const ladders = ::word_ladder::generate("atlases", "cabaret", english_lexicon);
 
+	CHECK(timer.getElapsedSeconds() <= 15.0);
 	CHECK(std::size(ladders) != 0);
 }
