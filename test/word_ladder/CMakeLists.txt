@@ -7,13 +7,31 @@ cxx_test(
 )
 
 cxx_test(
-   TARGET test_word_ladder_1
-   FILENAME test_word_ladder_1.cpp
+   TARGET test_word_ladder_benchmark
+   FILENAME test_word_ladder_benchmark.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )
 
 cxx_test(
-   TARGET test_word_ladder_benchmark
-   FILENAME test_word_ladder_benchmark.cpp
+   TARGET test_word_ladder_multiple
+   FILENAME test_word_ladder_multiple.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+cxx_test(
+   TARGET test_word_ladder_null
+   FILENAME test_word_ladder_null.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+cxx_test(
+   TARGET test_word_ladder_reverse
+   FILENAME test_word_ladder_reverse.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+cxx_test(
+   TARGET test_word_ladder_simple
+   FILENAME test_word_ladder_simple.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )
