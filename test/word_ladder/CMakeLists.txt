@@ -35,3 +35,9 @@ cxx_test(
    FILENAME test_word_ladder_simple.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )
+
+cxx_test(
+   TARGET test_word_ladder_sorted
+   FILENAME test_word_ladder_sorted.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)

@@ -2,17 +2,7 @@
 //
 // TESTING RATIONALE
 //
-// This set of test cases are simple (considering only single word ladder solutions) and tests
-// whether our generate() works for varying number of character differences and at various sections
-// of the word.
-//
-// Explanation on the test design style. I aim to abstract test cases by property of the function
-// generate(). Therefore each test case considers a particular property of generate() when given
-// some particular input. Each test case is then broken into sections to test words that will give
-// the property. Using test sections also allows me to use "english_lexicon" as a test fixture which
-// overall looks cleaner. Then properties that are similar are encapsulated by test files.
-//
-// For context, a property is something we know about the output to be true.
+// Test solutions with multiple word ladders are sorted lexicographically.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -38,95 +28,12 @@
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("Words with single different character at beginning of word") {
-	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
-
-	SECTION("at -> it") {
-		auto const ladders = word_ladder::generate("at", "it", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{{"at", "it"}};
-
-		CHECK(ladders == answers);
-	}
-
-	SECTION("ran -> tan") {
-		auto const ladders = word_ladder::generate("ran", "tan", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{{"ran", "tan"}};
-
-		CHECK(ladders == answers);
-	}
-}
-
-TEST_CASE("Words with single different character in middle of word") {
+TEST_CASE("Words with multiple word ladder solutions should be sorted lexicographically") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
 	SECTION("too -> two") {
 		auto const ladders = word_ladder::generate("too", "two", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{{"too", "two"}};
 
-		CHECK(ladders == answers);
-	}
-
-	SECTION("beer -> bear") {
-		auto const ladders = word_ladder::generate("beer", "bear", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{{"beer", "bear"}};
-
-		CHECK(ladders == answers);
-	}
-
-	SECTION("litter -> latter") {
-		auto const ladders = word_ladder::generate("litter", "latter", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{{"litter", "latter"}};
-
-		CHECK(ladders == answers);
-	}
-}
-
-TEST_CASE("Words with single different character at end of word") {
-	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
-
-	SECTION("paw -> pal") {
-		auto const ladders = word_ladder::generate("paw", "pal", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{{"paw", "pal"}};
-
-		CHECK(ladders == answers);
-	}
-
-	SECTION("boars -> boart") {
-		auto const ladders = word_ladder::generate("boars", "boart", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{{"boars", "boart"}};
-
-		CHECK(ladders == answers);
-	}
-}
-
-TEST_CASE("Words with a few different characters") {
-	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
-
-	SECTION("mister -> ladder") {
-		auto const ladders = word_ladder::generate("mister", "ladder", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{
-		   {"mister", "milter", "milder", "wilder", "widder", "wadder", "ladder"}};
-
-		CHECK(ladders == answers);
-	}
-}
-
-TEST_CASE("Words that are entirely dissimilar") {
-	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
-
-	SECTION("feat -> wool") {
-		auto const ladders = word_ladder::generate("feat", "wool", english_lexicon);
-		auto const answers =
-		   std::vector<std::vector<std::string>>{{"feat", "feal", "foal", "fool", "wool"}};
-
-		CHECK(ladders == answers);
-	}
-
-	SECTION("lipid -> resow") {
-		auto const ladders = word_ladder::generate("lipid", "resow", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{
-		   {"lipid", "livid", "lived", "rived", "rivet", "revet", "reset", "resew", "resow"}};
-
-		CHECK(ladders == answers);
+		CHECK(std::is_sorted(ladders.begin(), ladders.end()));
 	}
 }
