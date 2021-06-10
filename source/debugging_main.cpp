@@ -7,7 +7,11 @@
 //  frameworks might be overwhelming for some.
 
 auto main() -> int {
+<<<<<<< HEAD
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
+=======
+    auto const english_lexicon = word_ladder::read_lexicon("./test/word_ladder/english.txt");
+>>>>>>> fb2f8b6db7ec71c77821355aec6e78a0d44d5eee
 	auto const ladders = word_ladder::generate("fly", "sky", english_lexicon);
 	// debug here
 }
