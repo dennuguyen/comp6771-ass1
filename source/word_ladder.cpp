@@ -78,7 +78,9 @@ namespace word_ladder {
 
 			// Found the destination.
 			if (current_word == to) {
-				word_ladders.push_back(current_ladder);
+				word_ladders.push_back(current_ladder); // the reason why only 1 word ladder ever gets
+				                                        // pushed in is because 1 word_distance is used
+				                                        // for all word paths
 			}
 
 			for (const auto& adjacent_word : graph.at(current_word)) {
