@@ -58,37 +58,37 @@ namespace word_ladder {
 	                                 std::map<std::string, std::vector<std::string>> const& graph)
 	   -> std::vector<std::vector<std::string>> {
 		auto word_ladders = std::vector<std::vector<std::string>>();
-		auto word_distance = std::map<std::string, int>();
 		auto current_ladder = std::vector<std::string>();
 		auto ladder_queue = std::deque<std::vector<std::string>>();
 
 		// Initialise.
-		constexpr auto unvisited = -1;
-		for (const auto& word : graph) {
-			word_distance[word.first] = unvisited;
-		}
-		word_distance[from] = 1;
-		current_ladder.push_back(from);
-		ladder_queue.push_back(current_ladder);
+		current_ladder.emplace_back(from);
+		ladder_queue.emplace_back(current_ladder);
 
 		while (ladder_queue.empty() == false) {
 			current_ladder = ladder_queue.front();
 			ladder_queue.pop_front();
 			const auto current_word = current_ladder.back();
 
+			// Received a ladder that was invalid. BFS guarantees shortest paths are found first,
+			// therefore there are no more shortest word ladders.
+			if (word_ladders.empty() == false && current_ladder.size() > word_ladders.at(0).size()) {
+				break;
+			}
+
 			// Found the destination.
 			if (current_word == to) {
-				word_ladders.push_back(current_ladder); // the reason why only 1 word ladder ever gets
-				                                        // pushed in is because 1 word_distance is used
-				                                        // for all word paths
+				word_ladders.emplace_back(current_ladder);
 			}
 
 			for (const auto& adjacent_word : graph.at(current_word)) {
-				if (word_distance.at(adjacent_word) == unvisited) {
-					word_distance.at(adjacent_word) = word_distance.at(current_word) + 1;
-					auto new_word_ladder = std::vector<std::string>(current_ladder);
-					new_word_ladder.push_back(adjacent_word);
-					ladder_queue.push_back(new_word_ladder);
+				// Check if the adjacent word is unvisited.
+				if (std::find(current_ladder.begin(), current_ladder.end(), adjacent_word)
+				    == current_ladder.end()) {
+					// Create a new word ladder branching off the current ladder.
+					auto new_ladder = std::vector<std::string>(current_ladder);
+					new_ladder.emplace_back(adjacent_word);
+					ladder_queue.emplace_back(new_ladder);
 				}
 			}
 		}
