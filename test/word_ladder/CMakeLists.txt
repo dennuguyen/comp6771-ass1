@@ -13,6 +13,12 @@ cxx_test(
 )
 
 cxx_test(
+   TARGET test_word_ladder_duplicate
+   FILENAME test_word_ladder_duplicate.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+cxx_test(
    TARGET test_word_ladder_multiple
    FILENAME test_word_ladder_multiple.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
