@@ -54,15 +54,16 @@ namespace word_ladder {
 		return graph;
 	}
 
-	// Traverse the graph with a breadth first search to build a directed graph.
+	// Traverse the graph with a breadth-first search to build a directed graph.
 	static auto bfs(std::string const& from,
 	                std::string const& to,
 	                std::map<std::string, std::vector<std::string>> const& graph)
 	   -> std::map<std::string, int> {
 		// Initialise directed graph.
 		auto directed_graph = std::map<std::string, int>();
+		auto constexpr unvisited = -1;
 		for (auto const& node : graph) {
-			directed_graph[node.first] = -1;
+			directed_graph[node.first] = unvisited;
 		}
 		directed_graph.at(from) = 0;
 
@@ -81,7 +82,7 @@ namespace word_ladder {
 
 			for (auto const& adjacent_word : graph.at(current_word)) {
 				// Give unvisited words a distance from source.
-				if (directed_graph.at(adjacent_word) == -1) {
+				if (directed_graph.at(adjacent_word) == unvisited) {
 					directed_graph.at(adjacent_word) = directed_graph.at(current_word) + 1;
 					word_queue.push(adjacent_word);
 				}
@@ -90,7 +91,8 @@ namespace word_ladder {
 		return directed_graph;
 	}
 
-	// Traverse the graph and check for direction to build the word ladder.
+	// Traverse the graph with a depth-first search whilst checking for direction to build the word
+	// ladder.
 	static auto dfs(std::string const& from,
 	                std::string const& to,
 	                std::map<std::string, std::vector<std::string>> const& graph,
