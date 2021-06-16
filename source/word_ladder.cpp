@@ -1,7 +1,10 @@
 #include <algorithm>
+#include <deque>
 #include <fstream>
+#include <iostream>
 #include <map>
 #include <queue>
+#include <stack>
 
 #include "comp6771/word_ladder.hpp"
 
@@ -44,54 +47,85 @@ namespace word_ladder {
 
 			for (const auto& leaf_word : lexicon) {
 				if (is_single_mismatch(base_word, leaf_word)) {
-					adjacent_words.push_back(leaf_word);
+					adjacent_words.emplace_back(leaf_word);
 				}
 			}
 			graph[base_word] = adjacent_words;
+			graph[base_word].shrink_to_fit();
 		}
 		return graph;
 	}
 
-	// Search the graph for shortest paths between "from" and "to" using a modified BFS algorithm.
-	static auto breadth_first_search(std::string const& from,
-	                                 std::string const& to,
-	                                 std::map<std::string, std::vector<std::string>> const& graph)
-	   -> std::vector<std::vector<std::string>> {
-		auto word_ladders = std::vector<std::vector<std::string>>();
-		auto current_ladder = std::vector<std::string>();
-		auto ladder_queue = std::deque<std::vector<std::string>>();
+	static auto bfs(std::string const& from,
+	                std::string const& to,
+	                std::map<std::string, std::vector<std::string>> const& graph)
+	   -> std::map<std::string, int> {
+		// Initialise directed graph.
+		auto directed_graph = std::map<std::string, int>();
+		for (const auto& node : graph) {
+			directed_graph[node.first] = -1;
+		}
+		directed_graph.at(from) = 0;
 
-		// Initialise.
-		current_ladder.emplace_back(from);
-		ladder_queue.emplace_back(current_ladder);
+		// Initialise word queue.
+		auto word_queue = std::queue<std::string>();
+		word_queue.push(from);
 
-		while (ladder_queue.empty() == false) {
-			current_ladder = ladder_queue.front();
-			ladder_queue.pop_front();
-			const auto current_word = current_ladder.back();
-
-			// Received a ladder that was invalid. BFS guarantees shortest paths are found first,
-			// therefore there are no more shortest word ladders.
-			if (word_ladders.empty() == false && current_ladder.size() > word_ladders.at(0).size()) {
-				break;
-			}
+		while (word_queue.empty() == false) {
+			const auto current_word = word_queue.front();
+			word_queue.pop();
 
 			// Found the destination.
 			if (current_word == to) {
-				word_ladders.emplace_back(current_ladder);
+				break;
 			}
 
 			for (const auto& adjacent_word : graph.at(current_word)) {
-				// Check if the adjacent word is unvisited.
-				if (std::find(current_ladder.begin(), current_ladder.end(), adjacent_word)
-				    == current_ladder.end()) {
-					// Create a new word ladder branching off the current ladder.
-					auto new_ladder = std::vector<std::string>(current_ladder);
-					new_ladder.emplace_back(adjacent_word);
-					ladder_queue.emplace_back(new_ladder);
+				// Give unvisited words a distance from source.
+				if (directed_graph.at(adjacent_word) == -1) {
+					directed_graph.at(adjacent_word) = directed_graph.at(current_word) + 1;
+					word_queue.push(adjacent_word);
 				}
 			}
 		}
+		return directed_graph;
+	}
+
+	static auto dfs(std::string const& from,
+	                std::string const& to,
+	                std::map<std::string, std::vector<std::string>> const& graph,
+	                std::map<std::string, int> const& directed_graph)
+	   -> std::vector<std::vector<std::string>> {
+		// Initialise word ladders.
+		auto word_ladders = std::vector<std::vector<std::string>>();
+
+		// Initialise word ladder.
+		auto word_ladder = std::vector<std::string>();
+		word_ladder.emplace_back(from);
+
+		// Initialise word stack.
+		auto word_stack = std::stack<std::pair<std::string, std::vector<std::string>>>();
+		word_stack.push(std::make_pair(from, word_ladder));
+
+		while (word_stack.empty() == false) {
+			const auto [current_word, word_ladder] = word_stack.top();
+			word_stack.pop();
+
+			// Found the source.
+			if (current_word == to) {
+				word_ladders.push_back(word_ladder);
+			}
+
+			// Trace back directed graph.
+			for (const auto& adjacent_word : graph.at(current_word)) {
+				if (directed_graph.at(adjacent_word) > directed_graph.at(current_word)) {
+					auto new_ladder = std::vector<std::string>(word_ladder);
+					new_ladder.emplace_back(adjacent_word);
+					word_stack.push(std::make_pair(adjacent_word, new_ladder));
+				}
+			}
+		}
+		std::sort(word_ladders.begin(), word_ladders.end());
 		return word_ladders;
 	}
 
@@ -110,9 +144,10 @@ namespace word_ladder {
 	                            std::string const& to,
 	                            std::unordered_set<std::string> const& lexicon)
 	   -> std::vector<std::vector<std::string>> {
-		const auto filtered_lexicon = filter_lexicon(lexicon, from.length());
-		const auto graph = build_graph(filtered_lexicon);
-		const auto word_ladders = breadth_first_search(from, to, graph);
+		const auto& filtered_lexicon = filter_lexicon(lexicon, from.length());
+		const auto& graph = build_graph(filtered_lexicon);
+		const auto& directed_graph = bfs(from, to, graph);
+		const auto& word_ladders = dfs(from, to, graph, directed_graph);
 		return word_ladders;
 	}
 } // namespace word_ladder

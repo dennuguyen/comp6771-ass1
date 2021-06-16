@@ -7,7 +7,13 @@
 //  frameworks might be overwhelming for some.
 
 auto main() -> int {
-	auto const english_lexicon = word_ladder::read_lexicon("./test/word_ladder/english.txt");
-	auto const ladders = word_ladder::generate("fly", "sky", english_lexicon);
+	auto const english_lexicon = word_ladder::read_lexicon("../test/word_ladder/english.txt");
+	auto const ladders = word_ladder::generate("reeds", "power", english_lexicon);
 	// debug here
+	for (const auto& ladder : ladders) {
+		for (const auto& word : ladder) {
+			std::cout << word << " ";
+		}
+		std::cout << std::endl;
+	}
 }
