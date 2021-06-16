@@ -2,7 +2,7 @@
 //
 // TESTING RATIONALE
 //
-// Test solutions with multiple word ladders are correct.
+// Test solutions can have multiple shortest-distance word ladders.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -28,21 +28,35 @@
 
 #include "catch2/catch.hpp"
 
+TEST_CASE("Multiple word ladder solutions should have the same length") {
+	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
+
+	SECTION("waver -> power") {
+		auto const ladders = word_ladder::generate("waver", "power", english_lexicon);
+		auto const size = ladders.at(0).size();
+
+		CHECK(std::all_of(ladders.begin(),
+		                  ladders.end(),
+		                  [size](auto const& l) { return l.size() == size; })
+		      == true);
+	}
+
+	SECTION("bee -> man") {
+		auto const ladders = word_ladder::generate("bee", "man", english_lexicon);
+		auto const size = ladders.at(0).size();
+
+		CHECK(std::all_of(ladders.begin(),
+		                  ladders.end(),
+		                  [size](auto const& l) { return l.size() == size; })
+		      == true);
+	}
+}
+
 TEST_CASE("Words with a few word ladder solutions") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
-	SECTION("sour -> vise") {
-		auto const ladders = word_ladder::generate("sour", "vise", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{
-		   {"sour", "soup", "roup", "roue", "rose", "rise", "vise"},
-		   {"sour", "soup", "sols", "sole", "vole", "vile", "vise"},
-		};
-
-		CHECK(ladders == answers);
-	}
-
 	SECTION("awake -> sleep") {
-		auto const ladders = word_ladder::generate("apple", "peach", english_lexicon);
+		auto const ladders = word_ladder::generate("awake", "sleep", english_lexicon);
 		auto const answers = std::vector<std::vector<std::string>>{
 		   {"awake", "aware", "sware", "share", "sharn", "shawn", "shewn", "sheen", "sheep", "sleep"},
 		   {"awake", "aware", "sware", "share", "shire", "shirr", "shier", "sheer", "sheep", "sleep"},
@@ -68,14 +82,14 @@ TEST_CASE("Words with many word ladder solutions") {
 		   {"try", "toy", "tot", "rot", "rat"},
 		   {"try", "toy", "tot", "tat", "rat"},
 		   {"try", "wry", "way", "ray", "rat"},
-		   {"try", "wry", "wau", "wat", "rat"},
+		   {"try", "wry", "way", "wat", "rat"},
 		};
 
 		CHECK(ladders == answers);
 	}
 
 	SECTION("work -> play") {
-		auto const ladders = word_ladder::generate("apple", "peach", english_lexicon);
+		auto const ladders = word_ladder::generate("work", "play", english_lexicon);
 		auto const answers = std::vector<std::vector<std::string>>{
 		   {"work", "fork", "form", "foam", "flam", "flay", "play"},
 		   {"work", "pork", "perk", "peak", "pean", "plan", "play"},

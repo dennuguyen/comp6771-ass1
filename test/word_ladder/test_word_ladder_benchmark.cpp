@@ -28,12 +28,15 @@
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("atlases -> cabaret") {
-	Catch::Timer timer;
-	timer.start();
+TEST_CASE("Solutions should not take any longer than this test") {
 	auto const english_lexicon = ::word_ladder::read_lexicon("./english.txt");
-	auto const ladders = ::word_ladder::generate("atlases", "cabaret", english_lexicon);
 
-	CHECK(timer.getElapsedSeconds() <= 15.0);
-	CHECK(std::size(ladders) != 0);
+	SECTION("atlases -> cabaret") {
+		Catch::Timer timer;
+		timer.start();
+		auto const ladders = ::word_ladder::generate("atlases", "cabaret", english_lexicon);
+
+		CHECK(timer.getElapsedSeconds() <= 15.0);
+		CHECK(std::size(ladders) != 0);
+	}
 }
