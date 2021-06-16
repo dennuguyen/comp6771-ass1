@@ -34,6 +34,9 @@ TEST_CASE("Word ladders when reversed should be the same") {
 
 	SECTION("war -> bro") {
 		auto const ladders1 = word_ladder::generate("war", "roe", english_lexicon);
+
+		REQUIRE(ladders1.empty() == false);
+
 		auto ladders2 = word_ladder::generate("roe", "war", english_lexicon);
 		std::reverse(ladders2.at(0).begin(), ladders2.at(0).end());
 
@@ -46,6 +49,9 @@ TEST_CASE("Word ladders with multiple solutions when each reversed should each b
 
 	SECTION("aal -> log") {
 		auto const ladders1 = word_ladder::generate("aal", "log", english_lexicon);
+
+		REQUIRE(ladders1.empty() == false);
+
 		auto ladders2 = word_ladder::generate("log", "aal", english_lexicon);
 		for (auto& ladder : ladders2) {
 			std::reverse(ladder.begin(), ladder.end());
@@ -57,6 +63,9 @@ TEST_CASE("Word ladders with multiple solutions when each reversed should each b
 
 	SECTION("try -> rat") {
 		auto const ladders1 = word_ladder::generate("try", "rat", english_lexicon);
+
+		REQUIRE(ladders1.empty() == false);
+
 		auto ladders2 = word_ladder::generate("rat", "try", english_lexicon);
 		for (auto& ladder : ladders2) {
 			std::reverse(ladder.begin(), ladder.end());
@@ -68,6 +77,9 @@ TEST_CASE("Word ladders with multiple solutions when each reversed should each b
 
 	SECTION("menu -> trap") {
 		auto const ladders1 = word_ladder::generate("menu", "trap", english_lexicon);
+
+		REQUIRE(ladders1.empty() == false);
+
 		auto ladders2 = word_ladder::generate("trap", "menu", english_lexicon);
 		for (auto& ladder : ladders2) {
 			std::reverse(ladder.begin(), ladder.end());

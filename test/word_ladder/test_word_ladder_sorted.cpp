@@ -34,12 +34,14 @@ TEST_CASE("Words with multiple word ladder solutions should be sorted lexicograp
 	SECTION("too -> two") {
 		auto const ladders = word_ladder::generate("too", "two", english_lexicon);
 
+		REQUIRE(ladders.empty() == false);
 		CHECK(std::is_sorted(ladders.begin(), ladders.end()));
 	}
 
 	SECTION("beetles -> trample") {
 		auto const ladders = word_ladder::generate("beetles", "trample", english_lexicon);
 
+		REQUIRE(ladders.empty() == false);
 		CHECK(std::is_sorted(ladders.begin(), ladders.end()));
 	}
 }

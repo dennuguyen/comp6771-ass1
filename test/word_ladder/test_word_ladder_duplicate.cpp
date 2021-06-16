@@ -61,6 +61,7 @@ TEST_CASE("Word ladders should not contain duplicate word ladders") {
 	SECTION("trout -> mound") {
 		auto const ladders = word_ladder::generate("too", "two", english_lexicon);
 
+		REQUIRE(ladders.empty() == false);
 		REQUIRE(std::is_sorted(ladders.begin(), ladders.end()));
 		CHECK(std::adjacent_find(ladders.begin(), ladders.end()) == ladders.end());
 	}
@@ -68,6 +69,7 @@ TEST_CASE("Word ladders should not contain duplicate word ladders") {
 	SECTION("when -> what") {
 		auto const ladders = word_ladder::generate("when", "what", english_lexicon);
 
+		REQUIRE(ladders.empty() == false);
 		REQUIRE(std::is_sorted(ladders.begin(), ladders.end()));
 		CHECK(std::adjacent_find(ladders.begin(), ladders.end()) == ladders.end());
 	}
