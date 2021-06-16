@@ -31,17 +31,17 @@
 TEST_CASE("Words with multiple word ladder solutions should be sorted lexicographically") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
-	SECTION("too -> two") {
-		auto const ladders = word_ladder::generate("too", "two", english_lexicon);
+	SECTION("wry -> lip") {
+		auto const ladders = word_ladder::generate("wry", "lip", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
+		REQUIRE(ladders.size() > 1);
 		CHECK(std::is_sorted(ladders.begin(), ladders.end()));
 	}
 
-	SECTION("beetles -> trample") {
-		auto const ladders = word_ladder::generate("beetles", "trample", english_lexicon);
+	SECTION("read -> loop") {
+		auto ladders = word_ladder::generate("read", "loop", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
+		REQUIRE(ladders.size() > 1);
 		CHECK(std::is_sorted(ladders.begin(), ladders.end()));
 	}
 }

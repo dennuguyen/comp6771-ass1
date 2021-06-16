@@ -31,6 +31,17 @@
 TEST_CASE("Word ladders should have same-length words") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
+	SECTION("pie -> tar") {
+		auto const ladders = word_ladder::generate("pie", "tar", english_lexicon);
+
+		REQUIRE(ladders.empty() == false);
+		for (auto const& ladder : ladders) {
+			CHECK(std::all_of(ladder.begin(), ladder.end(), [](auto const& word) {
+				return word.size() == 3;
+			}));
+		}
+	}
+
 	SECTION("four -> tool") {
 		auto const ladders = word_ladder::generate("four", "tool", english_lexicon);
 
@@ -49,17 +60,6 @@ TEST_CASE("Word ladders should have same-length words") {
 		for (auto const& ladder : ladders) {
 			CHECK(std::all_of(ladder.begin(), ladder.end(), [](auto const& word) {
 				return word.size() == 5;
-			}));
-		}
-	}
-
-	SECTION("beetles -> trample") {
-		auto const ladders = word_ladder::generate("beetles", "trample", english_lexicon);
-
-		REQUIRE(ladders.empty() == false);
-		for (auto const& ladder : ladders) {
-			CHECK(std::all_of(ladder.begin(), ladder.end(), [](auto const& word) {
-				return word.size() == 7;
 			}));
 		}
 	}
