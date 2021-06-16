@@ -14,6 +14,10 @@
 //
 // For context, a property is something we know about the output to be true.
 //
+// Also please read the TEST_CASE names for the description of what the test case is exactly for. I
+// did not want to repeat myself in comments. These descriptions will typically follow the
+// "something should something" format if the exact word ladder solution is not provided.
+//
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Copyright UNSW Sydney School of Computer Science and Engineering
@@ -102,10 +106,9 @@ TEST_CASE("Words with single different character at end of word") {
 TEST_CASE("Words with a few different characters") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
-	SECTION("mister -> ladder") {
-		auto const ladders = word_ladder::generate("mister", "ladder", english_lexicon);
-		auto const answers = std::vector<std::vector<std::string>>{
-		   {"mister", "milter", "milder", "wilder", "widder", "wadder", "ladder"}};
+	SECTION("meek -> leak") {
+		auto const ladders = word_ladder::generate("meek", "leak", english_lexicon);
+		auto const answers = std::vector<std::vector<std::string>>{{"meek", "leek", "leak"}};
 
 		CHECK(ladders == answers);
 	}
