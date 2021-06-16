@@ -118,8 +118,8 @@ namespace word_ladder {
 				word_ladders.push_back(word_ladder);
 			}
 
-			// Trace back directed graph.
 			for (auto const& adjacent_word : graph.at(current_word)) {
+				// Check for direction of graph.
 				if (directed_graph.at(adjacent_word) > directed_graph.at(current_word)) {
 					auto new_ladder = std::vector<std::string>(word_ladder);
 					new_ladder.emplace_back(adjacent_word);
