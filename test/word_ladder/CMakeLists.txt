@@ -13,14 +13,27 @@ cxx_test(
 )
 
 cxx_test(
-   TARGET test_word_ladder_duplicate
-   FILENAME test_word_ladder_duplicate.cpp
+   TARGET test_word_ladder_duplicates
+   FILENAME test_word_ladder_duplicates.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )
 
 cxx_test(
-   TARGET test_word_ladder_multiple
-   FILENAME test_word_ladder_multiple.cpp
+   TARGET test_word_ladder_from_to
+   FILENAME test_word_ladder_from_to.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+
+cxx_test(
+   TARGET test_word_ladder_ladder_lengths
+   FILENAME test_word_ladder_ladder_lengths.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+cxx_test(
+   TARGET test_word_ladder_multiple_ladders
+   FILENAME test_word_ladder_multiple_ladders.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )
 
@@ -43,7 +56,13 @@ cxx_test(
 )
 
 cxx_test(
-   TARGET test_word_ladder_sorted
-   FILENAME test_word_ladder_sorted.cpp
+   TARGET test_word_ladder_sorted_ladders
+   FILENAME test_word_ladder_sorted_ladders.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+cxx_test(
+   TARGET test_word_ladder_word_length
+   FILENAME test_word_ladder_word_length.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )

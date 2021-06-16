@@ -28,34 +28,6 @@
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("Multiple word ladder solutions should have the same length") {
-	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
-
-	SECTION("bee -> man") {
-		auto const ladders = word_ladder::generate("bee", "man", english_lexicon);
-
-		REQUIRE(ladders.empty() == false);
-		auto const size = ladders.at(0).size();
-
-		CHECK(std::all_of(ladders.begin(),
-		                  ladders.end(),
-		                  [size](auto const& l) { return l.size() == size; })
-		      == true);
-	}
-
-	SECTION("waver -> power") {
-		auto const ladders = word_ladder::generate("waver", "power", english_lexicon);
-
-		REQUIRE(ladders.empty() == false);
-		auto const size = ladders.at(0).size();
-
-		CHECK(std::all_of(ladders.begin(),
-		                  ladders.end(),
-		                  [size](auto const& l) { return l.size() == size; })
-		      == true);
-	}
-}
-
 TEST_CASE("Words with a few word ladder solutions") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
