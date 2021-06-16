@@ -48,4 +48,10 @@ TEST_CASE("Words with no word ladder solutions") {
 
 		CHECK(ladders.empty() == true);
 	}
+
+	SECTION("trumpet -> seventy") {
+		auto const ladders = word_ladder::generate("trumpet", "seventy", english_lexicon);
+
+		CHECK(ladders.empty() == true);
+	}
 }

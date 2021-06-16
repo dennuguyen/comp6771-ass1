@@ -36,4 +36,10 @@ TEST_CASE("Words with multiple word ladder solutions should be sorted lexicograp
 
 		CHECK(std::is_sorted(ladders.begin(), ladders.end()));
 	}
+
+	SECTION("beetles -> trample") {
+		auto const ladders = word_ladder::generate("beetles", "trample", english_lexicon);
+
+		CHECK(std::is_sorted(ladders.begin(), ladders.end()));
+	}
 }
