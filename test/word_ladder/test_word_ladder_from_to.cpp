@@ -28,48 +28,39 @@
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("Word ladders should not contain duplicate words") {
+TEST_CASE("Valid word ladders should contain 'from' and 'to' at start and end") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
+
+	SECTION("war -> pin") {
+		auto ladders = word_ladder::generate("war", "pin", english_lexicon);
+
+		REQUIRE(ladders.empty() == false);
+
+		for (auto const& ladder : ladders) {
+			CHECK(ladder.front() == "war");
+			CHECK(ladder.back() == "pin");
+		}
+	}
 
 	SECTION("tree -> roof") {
 		auto ladders = word_ladder::generate("tree", "roof", english_lexicon);
 
 		REQUIRE(ladders.empty() == false);
-		std::sort(ladders.begin(), ladders.end()); // sort() before adjacent_find()
 
 		for (auto const& ladder : ladders) {
-			CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
+			CHECK(ladder.front() == "tree");
+			CHECK(ladder.back() == "roof");
 		}
 	}
 
-	SECTION("weak -> veal") {
-		auto ladders = word_ladder::generate("weak", "veal", english_lexicon);
+	SECTION("want -> pail") {
+		auto ladders = word_ladder::generate("want", "pail", english_lexicon);
 
 		REQUIRE(ladders.empty() == false);
-		std::sort(ladders.begin(), ladders.end()); // sort() before adjacent_find()
 
 		for (auto const& ladder : ladders) {
-			CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
+			CHECK(ladder.front() == "want");
+			CHECK(ladder.back() == "pail");
 		}
-	}
-}
-
-TEST_CASE("Word ladders should not contain duplicate word ladders") {
-	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
-
-	SECTION("trout -> mound") {
-		auto const ladders = word_ladder::generate("too", "two", english_lexicon);
-
-		REQUIRE(ladders.empty() == false);
-		REQUIRE(std::is_sorted(ladders.begin(), ladders.end()));
-		CHECK(std::adjacent_find(ladders.begin(), ladders.end()) == ladders.end());
-	}
-
-	SECTION("when -> what") {
-		auto const ladders = word_ladder::generate("when", "what", english_lexicon);
-
-		REQUIRE(ladders.empty() == false);
-		REQUIRE(std::is_sorted(ladders.begin(), ladders.end()));
-		CHECK(std::adjacent_find(ladders.begin(), ladders.end()) == ladders.end());
 	}
 }
