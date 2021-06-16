@@ -26,8 +26,8 @@ cxx_test(
 
 
 cxx_test(
-   TARGET test_word_ladder_ladder_lengths
-   FILENAME test_word_ladder_ladder_lengths.cpp
+   TARGET test_word_ladder_ladder_length
+   FILENAME test_word_ladder_ladder_length.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )
 
