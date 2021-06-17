@@ -2,7 +2,8 @@
 //
 // TESTING RATIONALE
 //
-// A property of word ladders is that when multiple word ladders are returned, they are sorted lexicographically.
+// A property of word ladders is that when multiple word ladders are returned, they are sorted
+// lexicographically.
 //
 // Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //

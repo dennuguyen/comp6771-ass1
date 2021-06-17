@@ -2,7 +2,8 @@
 //
 // TESTING RATIONALE
 //
-// A property of word ladders is that the "from" and "to" words given to generate() will always appear at the start and end of a word ladder respectively.
+// A property of word ladders is that the "from" and "to" words given to generate() will always
+// appear at the start and end of a word ladder respectively.
 //
 // Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
@@ -37,7 +38,8 @@ TEST_CASE("A word ladder should contain 'from' and 'to' at start and end") {
 		auto const ladders = word_ladder::generate("feat", "wool", english_lexicon);
 
 		REQUIRE(ladders.size() == 1);
-		
+		auto const& ladder = ladders.front();
+
 		CHECK(ladder.front() == "feat");
 		CHECK(ladder.back() == "wool");
 	}

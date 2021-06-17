@@ -2,7 +2,8 @@
 //
 // TESTING RATIONALE
 //
-// A property of word ladders is that an empty vector will be returned if there is no valid word ladder between "from" and "to" words.
+// A property of word ladders is that an empty vector will be returned if there is no valid word
+// ladder between "from" and "to" words.
 //
 // Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //

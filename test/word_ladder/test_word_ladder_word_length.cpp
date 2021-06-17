@@ -2,7 +2,8 @@
 //
 // TESTING RATIONALE
 //
-// A property of word ladders is that all the words within a word ladder will have the same length as "from" and "to".
+// A property of word ladders is that all the words within a word ladder will have the same length
+// as "from" and "to".
 //
 // Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
@@ -37,7 +38,8 @@ TEST_CASE("A word ladder should have same-length words") {
 		auto const ladders = word_ladder::generate("feat", "wool", english_lexicon);
 
 		REQUIRE(ladders.size() == 1);
-		auto const ladder = ladders.at(0);
+		auto const& ladder = ladders.front();
+
 		CHECK(std::all_of(ladder.begin(), ladder.end(), [](auto const& word) {
 			return word.size() == 4;
 		}));

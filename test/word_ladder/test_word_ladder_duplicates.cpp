@@ -2,7 +2,8 @@
 //
 // TESTING RATIONALE
 //
-// A property of word ladders is that there should not be any duplicates i.e. duplicate words within a word ladder or duplicate word ladders.
+// A property of word ladders is that there should not be any duplicates i.e. duplicate words within
+// a word ladder or duplicate word ladders.
 //
 // Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //

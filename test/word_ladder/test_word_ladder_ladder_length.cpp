@@ -2,7 +2,8 @@
 //
 // TESTING RATIONALE
 //
-// A property of word ladders is that multiple-returned word ladders will have the same length as they are all valid shortest-distance word ladders.
+// A property of word ladders is that multiple-returned word ladders will have the same length as
+// they are all valid shortest-distance word ladders.
 //
 // Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
