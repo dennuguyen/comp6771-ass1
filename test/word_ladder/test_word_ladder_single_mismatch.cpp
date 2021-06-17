@@ -59,7 +59,7 @@ static auto single_mismatch = [](auto const& a, auto const& b) {
 // https://en.cppreference.com/w/cpp/algorithm/count
 //
 // I also implemented this because I have too much time on my hands.
-template<typename InputIt, typename BinaryPredicate = std::equal_to<>>
+template<typename InputIt, typename BinaryPredicate>
 auto count_adjacent_if(InputIt first, InputIt last, BinaryPredicate p) ->
    typename std::iterator_traits<InputIt>::difference_type {
 	auto ret = typename std::iterator_traits<InputIt>::difference_type(0);
