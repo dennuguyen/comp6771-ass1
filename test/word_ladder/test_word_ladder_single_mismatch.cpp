@@ -26,13 +26,14 @@
 #include "comp6771/word_ladder.hpp"
 
 #include <algorithm>
-#include <iostream>
 #include <iterator>
 #include <string>
 #include <vector>
 
 #include "catch2/catch.hpp"
 
+// It is not guaranteed that this may be the same implementation as is_single_mismatch() in
+// word_ladder.cpp because we are doing black box testing.
 static auto is_single_mismatch(std::string const& a, std::string const& b) -> bool {
 	auto mismatch_count = 0;
 	for (unsigned int i = 0; i < a.length(); i++) {
