@@ -43,6 +43,26 @@ TEST_CASE("A word ladder should contain 'from' and 'to' at start and end") {
 		CHECK(ladder.front() == "feat");
 		CHECK(ladder.back() == "wool");
 	}
+
+	SECTION("want -> pail") {
+		auto ladders = word_ladder::generate("want", "pail", english_lexicon);
+
+		REQUIRE(ladders.size() == 1);
+		auto const& ladder = ladders.front();
+
+		CHECK(ladder.front() == "want");
+		CHECK(ladder.back() == "pail");
+	}
+
+	SECTION("tree -> roof") {
+		auto ladders = word_ladder::generate("tree", "roof", english_lexicon);
+
+		REQUIRE(ladders.size() == 1);
+		auto const& ladder = ladders.front();
+
+		CHECK(ladder.front() == "tree");
+		CHECK(ladder.back() == "roof");
+	}
 }
 
 TEST_CASE("All returned word ladders should contain 'from' and 'to' at start and end") {
@@ -51,7 +71,7 @@ TEST_CASE("All returned word ladders should contain 'from' and 'to' at start and
 	SECTION("war -> pin") {
 		auto ladders = word_ladder::generate("war", "pin", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
+		REQUIRE(ladders.size() > 1);
 
 		for (auto const& ladder : ladders) {
 			CHECK(ladder.front() == "war");
@@ -59,25 +79,14 @@ TEST_CASE("All returned word ladders should contain 'from' and 'to' at start and
 		}
 	}
 
-	SECTION("tree -> roof") {
-		auto ladders = word_ladder::generate("tree", "roof", english_lexicon);
+	SECTION("lake -> moon") {
+		auto ladders = word_ladder::generate("lake", "moon", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
-
-		for (auto const& ladder : ladders) {
-			CHECK(ladder.front() == "tree");
-			CHECK(ladder.back() == "roof");
-		}
-	}
-
-	SECTION("want -> pail") {
-		auto ladders = word_ladder::generate("want", "pail", english_lexicon);
-
-		REQUIRE(ladders.empty() == false);
+		REQUIRE(ladders.size() > 1);
 
 		for (auto const& ladder : ladders) {
-			CHECK(ladder.front() == "want");
-			CHECK(ladder.back() == "pail");
+			CHECK(ladder.front() == "lake");
+			CHECK(ladder.back() == "moon");
 		}
 	}
 }

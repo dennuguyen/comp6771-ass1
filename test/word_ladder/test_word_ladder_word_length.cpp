@@ -49,10 +49,10 @@ TEST_CASE("A word ladder should have same-length words") {
 TEST_CASE("All returned word ladders should have same-length words") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
-	SECTION("pie -> tar") {
-		auto const ladders = word_ladder::generate("pie", "tar", english_lexicon);
+	SECTION("war -> lob") {
+		auto const ladders = word_ladder::generate("war", "lob", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
+		REQUIRE(ladders.size() > 1);
 		for (auto const& ladder : ladders) {
 			CHECK(std::all_of(ladder.begin(), ladder.end(), [](auto const& word) {
 				return word.size() == 3;
@@ -60,10 +60,10 @@ TEST_CASE("All returned word ladders should have same-length words") {
 		}
 	}
 
-	SECTION("four -> tool") {
-		auto const ladders = word_ladder::generate("four", "tool", english_lexicon);
+	SECTION("were -> tool") {
+		auto const ladders = word_ladder::generate("were", "tool", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
+		REQUIRE(ladders.size() > 1);
 		for (auto const& ladder : ladders) {
 			CHECK(std::all_of(ladder.begin(), ladder.end(), [](auto const& word) {
 				return word.size() == 4;
@@ -74,7 +74,7 @@ TEST_CASE("All returned word ladders should have same-length words") {
 	SECTION("crack -> trick") {
 		auto const ladders = word_ladder::generate("crack", "trick", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
+		REQUIRE(ladders.size() > 1);
 		for (auto const& ladder : ladders) {
 			CHECK(std::all_of(ladder.begin(), ladder.end(), [](auto const& word) {
 				return word.size() == 5;

@@ -37,24 +37,24 @@ TEST_CASE("Multiple word ladder solutions should have the same length") {
 	SECTION("bee -> man") {
 		auto const ladders = word_ladder::generate("bee", "man", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
-		auto const size = ladders.at(0).size();
+		REQUIRE(ladders.size() > 1);
+		auto const& size = ladders.at(0).size();
 
 		CHECK(std::all_of(ladders.begin(),
 		                  ladders.end(),
-		                  [size](auto const& l) { return l.size() == size; })
+		                  [size](auto const& word) { return word.size() == size; })
 		      == true);
 	}
 
-	SECTION("waver -> power") {
-		auto const ladders = word_ladder::generate("waver", "power", english_lexicon);
+	SECTION("caved -> train") {
+		auto const ladders = word_ladder::generate("caved", "train", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
-		auto const size = ladders.at(0).size();
+		REQUIRE(ladders.size() > 1);
+		auto const& size = ladders.at(0).size();
 
 		CHECK(std::all_of(ladders.begin(),
 		                  ladders.end(),
-		                  [size](auto const& l) { return l.size() == size; })
+		                  [size](auto const& word) { return word.size() == size; })
 		      == true);
 	}
 }
