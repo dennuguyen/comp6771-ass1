@@ -31,25 +31,51 @@
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("Word ladders should not contain duplicate words") {
+TEST_CASE("A word ladder should not contain duplicate words") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
 	SECTION("tree -> roof") {
 		auto ladders = word_ladder::generate("tree", "roof", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
-		std::sort(ladders.begin(), ladders.end()); // sort() before adjacent_find()
+		REQUIRE(ladders.size() == 1);
+		auto ladder = ladders.front();
 
-		for (auto const& ladder : ladders) {
-			CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
-		}
+		std::sort(ladder.begin(), ladder.end()); // must sort() before adjacent_find()
+
+		CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
 	}
 
-	SECTION("weak -> veal") {
-		auto ladders = word_ladder::generate("weak", "veal", english_lexicon);
+	SECTION("trout -> mound") {
+		auto const ladders = word_ladder::generate("too", "two", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
-		std::sort(ladders.begin(), ladders.end()); // sort() before adjacent_find()
+		REQUIRE(ladders.size() == 1);
+		auto ladder = ladders.front();
+
+		std::sort(ladder.begin(), ladder.end()); // must sort() before adjacent_find()
+
+		CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
+	}
+
+	SECTION("when -> what") {
+		auto const ladders = word_ladder::generate("when", "what", english_lexicon);
+
+		REQUIRE(ladders.size() == 1);
+		auto ladder = ladders.front();
+
+		std::sort(ladder.begin(), ladder.end()); // must sort() before adjacent_find()
+
+		CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
+	}
+}
+
+TEST_CASE("All returned word ladders should not contain duplicate words") {
+	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
+
+	SECTION("wear -> nice") {
+		auto ladders = word_ladder::generate("wear", "nice", english_lexicon);
+
+		REQUIRE(ladders.size() > 1);
+		std::sort(ladders.begin(), ladders.end()); // must sort() before adjacent_find()
 
 		for (auto const& ladder : ladders) {
 			CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
@@ -60,19 +86,14 @@ TEST_CASE("Word ladders should not contain duplicate words") {
 TEST_CASE("Word ladders should not contain duplicate word ladders") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
-	SECTION("trout -> mound") {
-		auto const ladders = word_ladder::generate("too", "two", english_lexicon);
+	SECTION("cry -> ran") {
+		auto ladders = word_ladder::generate("cry", "ran", english_lexicon);
 
-		REQUIRE(ladders.empty() == false);
-		REQUIRE(std::is_sorted(ladders.begin(), ladders.end()));
-		CHECK(std::adjacent_find(ladders.begin(), ladders.end()) == ladders.end());
-	}
+		REQUIRE(ladders.size() > 1);
+		std::sort(ladders.begin(), ladders.end()); // must sort() before adjacent_find()
 
-	SECTION("when -> what") {
-		auto const ladders = word_ladder::generate("when", "what", english_lexicon);
-
-		REQUIRE(ladders.empty() == false);
-		REQUIRE(std::is_sorted(ladders.begin(), ladders.end()));
-		CHECK(std::adjacent_find(ladders.begin(), ladders.end()) == ladders.end());
+		for (auto const& ladder : ladders) {
+			CHECK(std::adjacent_find(ladder.begin(), ladder.end()) == ladder.end());
+		}
 	}
 }
