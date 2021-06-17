@@ -2,7 +2,7 @@
 //
 // TESTING RATIONALE
 //
-// A property of word ladders is that words in a word ladder have a single mismatch to
+// A property of word ladders is that words in a word ladder have a single character mismatch to
 // their neighbouring words.
 //
 // Please refer to test_word_ladder_simple.cpp for the test design rationale.
