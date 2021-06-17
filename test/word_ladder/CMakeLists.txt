@@ -56,10 +56,23 @@ cxx_test(
 )
 
 cxx_test(
+   TARGET test_word_ladder_single_mismatch
+   FILENAME test_word_ladder_single_mismatch.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
+cxx_test(
    TARGET test_word_ladder_sorted_ladders
    FILENAME test_word_ladder_sorted_ladders.cpp
    LINK word_ladder lexicon Catch2::Catch2 test_main
 )
+
+cxx_test(
+   TARGET test_word_ladder_word_in_lexicon
+   FILENAME test_word_ladder_word_in_lexicon.cpp
+   LINK word_ladder lexicon Catch2::Catch2 test_main
+)
+
 
 cxx_test(
    TARGET test_word_ladder_word_length
