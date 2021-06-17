@@ -2,7 +2,9 @@
 //
 // TESTING RATIONALE
 //
-// A word ladder should contain the "from" and "to" words given to generate().
+// A property of word ladders is that the "from" and "to" words given to generate() will always appear at the start and end of a word ladder respectively.
+//
+// Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -28,7 +30,20 @@
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("Valid word ladders should contain 'from' and 'to' at start and end") {
+TEST_CASE("A word ladder should contain 'from' and 'to' at start and end") {
+	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
+
+	SECTION("feat -> wool") {
+		auto const ladders = word_ladder::generate("feat", "wool", english_lexicon);
+
+		REQUIRE(ladders.size() == 1);
+		
+		CHECK(ladder.front() == "feat");
+		CHECK(ladder.back() == "wool");
+	}
+}
+
+TEST_CASE("All returned word ladders should contain 'from' and 'to' at start and end") {
 	auto const english_lexicon = word_ladder::read_lexicon("./english.txt");
 
 	SECTION("war -> pin") {

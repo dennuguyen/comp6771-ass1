@@ -2,7 +2,9 @@
 //
 // TESTING RATIONALE
 //
-// Test solutions can have multiple shortest-distance word ladders.
+// A property of word ladders is that multiple word ladders can be returned. This test file is to build general confidence into our solution.
+//
+// Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //

@@ -2,7 +2,9 @@
 //
 // TESTING RATIONALE
 //
-// Benchmark to ensure solution is not too slow. Modified to fail the test case if times out.
+// Benchmark to ensure solution is not too slow. Modified to fail if the test case times out.
+//
+// Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //

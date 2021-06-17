@@ -2,8 +2,9 @@
 //
 // TESTING RATIONALE
 //
-// Test solutions can have multiple shortest-distance word ladders however these word ladders must
-// have the same length for the shortest distance to be valid.
+// A property of word ladders is that multiple-returned word ladders will have the same length as they are all valid shortest-distance word ladders.
+//
+// Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //

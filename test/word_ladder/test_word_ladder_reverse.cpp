@@ -2,8 +2,10 @@
 //
 // TESTING RATIONALE
 //
-// To test the property that word ladders are reversible when order of "from" and "to" words is
+// A property of word ladders is that word ladders are reversible when order of "from" and "to" words is
 // reversed when passed into generate().
+//
+// Please refer to test_word_ladder_simple.cpp for the test design rationale.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
